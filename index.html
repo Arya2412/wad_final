@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>User Registration</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    margin: 0;
+    padding: 0;
+  }
+
+  .container {
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  }
+
+  h2 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+
+  form {
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
+  label {
+    display: block;
+    margin-bottom: 5px;
+    color: #555;
+    font-weight: bold;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  input[type="date"] {
+    width: calc(100% - 20px);
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+  }
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-right: 5px;
+    vertical-align: middle;
+  }
+
+  label.radio-label {
+    display: inline-block;
+    margin-right: 20px;
+    color: #555;
+  }
+
+  label.checkbox-label {
+    display: inline-block;
+    margin-right: 15px;
+    color: #555;
+  }
+
+  button[type="submit"] {
+    background-color: #4caf50;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+  <nav style="background-color: #333; color: #fff; padding: 10px;">
+    <div style="max-width: 500px; margin: 0 auto;">
+      <span style="font-size: 24px;">User Registration</span>
+    </div>
+  </nav>
+
+  <div class="container">
+    <h2>User Registration</h2>
+    <form id="registrationForm">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" required>
+
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required>
+
+      <label for="dob">Date of Birth:</label>
+      <input type="date" id="dob" name="dob" required>
+
+      <label>Gender:</label>
+      <label class="radio-label">
+        <input type="radio" id="male" name="gender" value="male" required>
+        Male
+      </label>
+      <label class="radio-label">
+        <input type="radio" id="female" name="gender" value="female">
+        Female
+      </label><br>
+
+      <label>Hobbies:</label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="reading" name="hobbies" value="reading">
+        Reading
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="sports" name="hobbies" value="sports">
+        Sports
+      </label>
+      <label class="checkbox-label">
+        <input type="checkbox" id="music" name="hobbies" value="music">
+        Music
+      </label><br>
+
+      <label for="address">Address:</label>
+      <input type="text" id="address" name="address" required>
+
+      <label for="pincode">Pincode:</label>
+      <input type="text" id="pincode" name="pincode" pattern="\d{6}" title="Pincode must be 6 digits long" required><br>
+
+      <button type="submit">Register</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registrationForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the default form submission
+
+      // Get form values
+      console.log("Form Submitted");
+      var username = document.getElementById("username").value;
+      var email = document.getElementById("email").value;
+      var password = document.getElementById("password").value;
+      var dob = document.getElementById("dob").value;
+      var gender = document.querySelector('input[name="gender"]:checked').value;
+      var hobbies = [];
+      var hobbiesInputs = document.querySelectorAll('input[name="hobbies"]:checked');
+      hobbiesInputs.forEach(function(input) {
+        hobbies.push(input.value);
+      });
+      var address = document.getElementById("address").value;
+      var pincode = document.getElementById("pincode").value;
+
+      // Create user object
+      var user = {
+        username: username,
+        email: email,
+        password: password,
+        dob: dob,
+        gender: gender,
+        hobbies: hobbies,
+        address: address,
+        pincode: pincode
+      };
+
+      // Retrieve existing users from local storage or initialize an empty array
+      var users = JSON.parse(localStorage.getItem("users1")) || [];
+
+      // Add new user to the array
+      users.push(user);
+
+      // Save the updated array back to local storage
+      localStorage.setItem("users1", JSON.stringify(users));
+
+      // Redirect to the new page to display the list
+      window.location.href = "userList.html";
+    });
+  </script>
+</body>
+</html>
